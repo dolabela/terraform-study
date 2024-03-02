@@ -18,7 +18,7 @@ output "network" {
 }
 
 output "subnet" {
-  value = "${module.vpc.subnet}"
+  value = "${module.vpc.subnet}" 
 }
 
 output "firewall_rule" {
