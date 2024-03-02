@@ -21,4 +21,4 @@ steps:
             terraform plan || exit 1
             cd ../../
           done
-        fi 
+        fi  
