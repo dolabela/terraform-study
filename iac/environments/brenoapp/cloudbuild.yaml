@@ -7,7 +7,7 @@ steps:
     - |
         if [ -d "iac/environments/$_PROJECT" ]; then
           cd iac/environments/$_PROJECT
-          terraform init;
+          terraform init -backend-config=config/${_ENV}.conf;
         else
           for dir in iac/environments/*/
           do
