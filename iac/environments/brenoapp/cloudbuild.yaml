@@ -51,9 +51,9 @@ steps:
     args:
     - '-c'
     - |
-        if [ $BRANCH_NAME != "dev" ] || [ $BRANCH_NAME != "dev" ] ; then
+        if [ $BRANCH_NAME == "dev" ] || [ $BRANCH_NAME == "dev" ] ; then
           cd iac/environments/$_PROJECT
-          terraform apply -auto-approve
+          terraform apply -auto-approve -var-file=config/${_ENV}.tfvars
         else
           echo "***************************** SKIPPING APPLYING *******************************"
           echo "Branch '$BRANCH_NAME' does not represent an official environment."
