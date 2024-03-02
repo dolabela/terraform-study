@@ -1,5 +1,5 @@
 steps:
-  - id: 'tf plan'
+  - id: 'tf init'
     name: 'hashicorp/terraform:1.0.0'
     entrypoint: 'sh'
     args:
@@ -19,6 +19,29 @@ steps:
             echo "******* At environment: ${env} ********"
             echo "*************************************************"
             terraform init || exit 1
+            cd ../../
+          done
+        fi   
+  - id: 'tf plan'
+    name: 'hashicorp/terraform:1.0.0'
+    entrypoint: 'sh'
+    args:
+    - '-c'
+    - |
+        if [ -d "iac/environments/$_PROJECT" ]; then
+          cd iac/environments/$_PROJECT
+          terraform plan;
+        else
+          for dir in iac/environments/*/
+          do
+            cd ${dir}
+            env=${dir%*/}
+            env=${env#*/}
+            echo ""
+            echo "*************** TERRAFOM PLAN ******************"
+            echo "******* At environment: ${env} ********"
+            echo "*************************************************"
+            terraform plan || exit 1
             cd ../../
           done
         fi   
