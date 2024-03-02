@@ -13,4 +13,19 @@
 # limitations under the License.
 
 
-variable "project" {}
+variable "region" {
+  type        = string
+  description = "region name"
+  default     = "US"
+}
+
+variable "project" {
+  type        = string
+  description = "project name"
+  default     = "brenoapp"
+}
+
+variable "branch" {
+  type        = string
+  description = "branch name"
+}
