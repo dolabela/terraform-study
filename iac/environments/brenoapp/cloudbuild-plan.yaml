@@ -7,7 +7,7 @@ steps:
     - |
         if [ -d "iac/environments/$_PROJECT" ]; then
           cd iac/environments/$_PROJECT
-          terraform plan -backend-config=config/${_ENV}.conf;
+          terraform init -backend-config=config/${_ENV}.conf;
         else
           for dir in iac/environments/*/
           do
@@ -15,10 +15,10 @@ steps:
             env=${dir%*/}
             env=${env#*/}
             echo ""
-            echo "*************** TERRAFOM PLAN ******************"
+            echo "*************** TERRAFOM INIT ******************"
             echo "******* At environment: ${env} ********"
             echo "*************************************************"
-            terraform plan || exit 1
+            terraform init || exit 1
             cd ../../
           done
         fi   
