@@ -15,8 +15,8 @@
 
 terraform {
   backend "gcs" {
-    bucket = "brenoapp-dev-tfstate"
-    prefix = "env/dev"
+    bucket = "brenoapp-${var.branch}-tfstate"
+    prefix = "terraform"
   }
 }
   

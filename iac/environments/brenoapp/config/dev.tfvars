@@ -1,2 +1,2 @@
 project                      = "brenoapp-dev"
-branch                          = "dev"
+branch                       = "dev"
