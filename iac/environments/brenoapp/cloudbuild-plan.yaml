@@ -5,11 +5,11 @@ steps:
     args:
     - '-c'
     - |
-        if [ -d "environments/$_PROJECT" ]; then
-          cd environments/$_PROJECT
+        if [ -d "iac/environments/$_PROJECT" ]; then
+          cd iac/environments/$_PROJECT
           terraform plan
         else
-          for dir in environments/*/
+          for dir in iac/environments/*/
           do
             cd ${dir}
             env=${dir%*/}
