@@ -28,4 +28,5 @@ variable "project" {
 variable "branch" {
   type        = string
   description = "branch name"
+  default     = "dev"
 }

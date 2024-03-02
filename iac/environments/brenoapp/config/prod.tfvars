@@ -1,2 +1,2 @@
 project                      = "brenoapp-prod"
-env                          = "prod"
+branch                       = "prod"
