@@ -1,0 +1,61 @@
+steps:
+  - id: 'tf init'
+    name: 'hashicorp/terraform:1.0.0'
+    entrypoint: 'sh'
+    args:
+    - '-c'
+    - |
+        if [ -d "iac/environments/$_PROJECT" ]; then
+          cd iac/environments/$_PROJECT
+          terraform init -backend-config=config/${_ENV}.conf;
+        else
+          for dir in iac/environments/*/
+          do
+            cd ${dir}
+            env=${dir%*/}
+            env=${env#*/}
+            echo ""
+            echo "*************** TERRAFORM INIT ******************"
+            echo "******* At environment: ${env} ********"
+            echo "*************************************************"
+            terraform init || exit 1
+            cd ../../
+          done
+        fi   
+  - id: 'tf plan'
+    name: 'hashicorp/terraform:1.0.0'
+    entrypoint: 'sh'
+    args:
+    - '-c'
+    - |
+        if [ -d "iac/environments/$_PROJECT" ]; then
+          cd iac/environments/$_PROJECT
+          terraform plan -var-file=config/${_ENV}.tfvars;
+        else
+          for dir in iac/environments/*/
+          do
+            cd ${dir}
+            env=${dir%*/}
+            env=${env#*/}
+            echo ""
+            echo "*************** TERRAFORM PLAN ******************"
+            echo "******* At environment: ${env} ********"
+            echo "*************************************************"
+            terraform plan || exit 1
+            cd ../../
+          done
+        fi   
+  - id: 'tf apply' 
+    name: 'hashicorp/terraform:1.0.0'
+    entrypoint: 'sh' 
+    args:
+    - '-c'
+    - |
+        if [ $BRANCH_NAME == "dev" ] || [ $BRANCH_NAME == "dev" ] ; then
+          cd iac/environments/$_PROJECT
+          terraform apply -auto-approve -var-file=config/${_ENV}.tfvars
+        else
+          echo "***************************** SKIPPING APPLYING *******************************"
+          echo "Branch '$BRANCH_NAME' does not represent an official environment."
+          echo "*******************************************************************************"
+        fi
